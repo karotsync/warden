@@ -1,4 +1,5 @@
-# install go, if needed
+**install go, if needed**
+```
 cd $HOME
 VER="1.21.3"
 wget "https://golang.org/dl/go$VER.linux-amd64.tar.gz"
@@ -9,25 +10,31 @@ rm "go$VER.linux-amd64.tar.gz"
 echo "export PATH=$PATH:/usr/local/go/bin:~/go/bin" >> ~/.bash_profile
 source $HOME/.bash_profile
 [ ! -d ~/go/bin ] && mkdir -p ~/go/bin
+```
 
-# set vars
+**set vars**
+```
 echo "export WALLET="wallet"" >> $HOME/.bash_profile
 echo "export MONIKER="test"" >> $HOME/.bash_profile
 echo "export WARDEN_CHAIN_ID="buenavista-1"" >> $HOME/.bash_profile
 echo "export WARDEN_PORT="18"" >> $HOME/.bash_profile
 source $HOME/.bash_profile
+```
 
-# download binary
+**download binary**
+```
 cd $HOME
 rm -rf wardenprotocol
 git clone --depth 1 --branch v0.3.1 https://github.com/warden-protocol/wardenprotocol/
 cd wardenprotocol
 make install
+```
 
-# config and init app
+**config and init app**
+```
 wardend init $MONIKER
 sed -i -e "s|^node *=.*|node = \"tcp://localhost:${WARDEN_PORT}657\"|" $HOME/.warden/config/client.toml
-
+```
 # download genesis and addrbook
 wget -O $HOME/.warden/config/genesis.json https://server-4.itrocket.net/testnet/warden/genesis.json
 wget -O $HOME/.warden/config/addrbook.json  https://server-4.itrocket.net/testnet/warden/addrbook.json
