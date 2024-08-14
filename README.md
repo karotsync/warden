@@ -35,16 +35,19 @@ make install
 wardend init $MONIKER
 sed -i -e "s|^node *=.*|node = \"tcp://localhost:${WARDEN_PORT}657\"|" $HOME/.warden/config/client.toml
 ```
-# download genesis and addrbook
+**download genesis and addrbook**
+```
 wget -O $HOME/.warden/config/genesis.json https://server-4.itrocket.net/testnet/warden/genesis.json
 wget -O $HOME/.warden/config/addrbook.json  https://server-4.itrocket.net/testnet/warden/addrbook.json
+```
 
-# set seeds and peers
+**set seeds and peers**
+```
 SEEDS="8288657cb2ba075f600911685670517d18f54f3b@warden-testnet-seed.itrocket.net:18656"
 PEERS="b14f35c07c1b2e58c4a1c1727c89a5933739eeea@warden-testnet-peer.itrocket.net:18656,e3c6afd0b25b4521bc3b291b0d27b8d0545a6c12@88.99.167.27:18656,79465462505881afde26b595722e0cc80721a17f@162.55.85.119:42656,7fa0759353d8e2b37228454cc92bfc4df6cf6adc@116.202.150.231:656,5d001600956ba67136c17baa8ff2da0b074b8364@167.235.14.83:16256,989aa378f38770660fb7b775703a90a397d7a53f@195.26.246.127:11256,d32322720621fad9f1db1b69a01e309d2841a058@91.207.54.78:26656,1bc518f65560a07e26e61879579dfc1420332974@65.108.10.239:60756,3cc4b381d321ad53ad1f7dd063795aba3904613c@65.109.61.219:25656,0bd82efac906de0187072de528c0c0f0634e89ca@95.216.248.117:46656,059abed41c4d2b5a6f6ae5d07c637538fac39372@158.220.108.120:11656"
 sed -i -e "/^\[p2p\]/,/^\[/{s/^[[:space:]]*seeds *=.*/seeds = \"$SEEDS\"/}" \
        -e "/^\[p2p\]/,/^\[/{s/^[[:space:]]*persistent_peers *=.*/persistent_peers = \"$PEERS\"/}" $HOME/.warden/config/config.toml
-
+```
 
 # set custom ports in app.toml
 sed -i.bak -e "s%:1317%:${WARDEN_PORT}317%g;
