@@ -49,7 +49,8 @@ sed -i -e "/^\[p2p\]/,/^\[/{s/^[[:space:]]*seeds *=.*/seeds = \"$SEEDS\"/}" \
        -e "/^\[p2p\]/,/^\[/{s/^[[:space:]]*persistent_peers *=.*/persistent_peers = \"$PEERS\"/}" $HOME/.warden/config/config.toml
 ```
 
-# set custom ports in app.toml
+**set custom ports in app.toml**
+```
 sed -i.bak -e "s%:1317%:${WARDEN_PORT}317%g;
 s%:8080%:${WARDEN_PORT}080%g;
 s%:9090%:${WARDEN_PORT}090%g;
@@ -57,14 +58,17 @@ s%:9091%:${WARDEN_PORT}091%g;
 s%:8545%:${WARDEN_PORT}545%g;
 s%:8546%:${WARDEN_PORT}546%g;
 s%:6065%:${WARDEN_PORT}065%g" $HOME/.warden/config/app.toml
+```
 
-# set custom ports in config.toml file
+**set custom ports in config.toml file**
+```
 sed -i.bak -e "s%:26658%:${WARDEN_PORT}658%g;
 s%:26657%:${WARDEN_PORT}657%g;
 s%:6060%:${WARDEN_PORT}060%g;
 s%:26656%:${WARDEN_PORT}656%g;
 s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${WARDEN_PORT}656\"%;
 s%:26660%:${WARDEN_PORT}660%g" $HOME/.warden/config/config.toml
+```
 
 # config pruning
 sed -i -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.warden/config/app.toml
