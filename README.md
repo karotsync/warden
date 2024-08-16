@@ -70,16 +70,19 @@ s%^external_address = \"\"%external_address = \"$(wget -qO- eth0.me):${WARDEN_PO
 s%:26660%:${WARDEN_PORT}660%g" $HOME/.warden/config/config.toml
 ```
 
-# config pruning
+**config pruning**
+```
 sed -i -e "s/^pruning *=.*/pruning = \"custom\"/" $HOME/.warden/config/app.toml
 sed -i -e "s/^pruning-keep-recent *=.*/pruning-keep-recent = \"100\"/" $HOME/.warden/config/app.toml
 sed -i -e "s/^pruning-interval *=.*/pruning-interval = \"50\"/" $HOME/.warden/config/app.toml
+```
 
-# set minimum gas price, enable prometheus and disable indexing
+**set minimum gas price, enable prometheus and disable indexing**
+```
 sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.0025uward"|g' $HOME/.warden/config/app.toml
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.warden/config/config.toml
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.warden/config/config.toml
-
+```
 # create service file
 sudo tee /etc/systemd/system/wardend.service > /dev/null <<EOF
 [Unit]
