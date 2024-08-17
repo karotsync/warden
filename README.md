@@ -83,7 +83,8 @@ sed -i 's|minimum-gas-prices =.*|minimum-gas-prices = "0.0025uward"|g' $HOME/.wa
 sed -i -e "s/prometheus = false/prometheus = true/" $HOME/.warden/config/config.toml
 sed -i -e "s/^indexer *=.*/indexer = \"null\"/" $HOME/.warden/config/config.toml
 ```
-# create service file
+**create service file**
+```
 sudo tee /etc/systemd/system/wardend.service > /dev/null <<EOF
 [Unit]
 Description=Warden node
@@ -98,8 +99,10 @@ LimitNOFILE=65535
 [Install]
 WantedBy=multi-user.target
 EOF
+```
 
-# reset and download snapshot
+**reset and download snapshot**
+
 wardend tendermint unsafe-reset-all --home $HOME/.warden
 if curl -s --head curl https://server-4.itrocket.net/testnet/warden/warden_2024-08-12_1653951_snap.tar.lz4 | head -n 1 | grep "200" > /dev/null; then
   curl https://server-4.itrocket.net/testnet/warden/warden_2024-08-12_1653951_snap.tar.lz4 | lz4 -dc - | tar -xf - -C $HOME/.warden
